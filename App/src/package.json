@@ -1,0 +1,13 @@
+{
+    "name": "secret-word-app",
+    "version": "1.0.0",
+    "description": "Node app to display SECRET_WORD",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "module_name": "^1.0.0"
+    }
+}
