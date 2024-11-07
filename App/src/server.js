@@ -24,3 +24,14 @@ app.get('/docker', (req, res) => {
 app.listen(3000, () => {
   console.log(`App running on port 3000.`);
 });
+
+// Load Balancer health check
+app.get('/loadbalanced', (req, res) => {
+  res.status(200).send('Load balancer is working!');
+});
+
+// TLS checks
+app.get('/tls', (req, res) => {
+  res.send('TLS endpoint is active!');
+});
+

@@ -85,6 +85,17 @@ resource "aws_lb_target_group" "target_group" {
   protocol    = "HTTP"
   target_type = "ip"
   vpc_id      = aws_default_vpc.default_vpc.id
+
+  health_check {
+    path                = "/loadbalanced"
+    protocol            = "HTTP"
+    matcher             = "200"
+    interval            = 30
+    timeout             = 5
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+  }
+
 }
 
 resource "aws_lb_listener" "listener" {
@@ -94,6 +105,20 @@ resource "aws_lb_listener" "listener" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.target_group.arn
+  }
+}
+
+resource "aws_lb_listener_rule" "listener_rule" {
+  listener_arn = aws_lb_listener.listener.arn
+  priority     = 1
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.target_group.arn
+  }
+  condition {
+    path_pattern {
+      values = ["/loadbalanced"]
+    }
   }
 }
 
